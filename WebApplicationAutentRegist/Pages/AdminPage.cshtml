@@ -47,10 +47,14 @@
                     <td>@user.Email<br></td>
                     <td class="font-weight-bold"> @user.LastLoginTime</td>
                     <td>@user.LastRegistrationTime</td>
+
                         @if (user.Status == true)
-                        {<td>Blocked</td>}
-                        else{<td>Active</td>}                                     
-                </tr>
+                        {<td style="color: red">Blocked</td>}
+                            else
+                            {
+                                <td style="color: darkgreen; font-weight:700">Active</td>
+                            }
+                        </tr>
                  }
             </tbody>
         </table>
