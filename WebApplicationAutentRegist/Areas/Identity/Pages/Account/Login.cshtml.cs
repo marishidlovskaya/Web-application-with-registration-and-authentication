@@ -119,7 +119,7 @@ namespace WebApplicationAutentRegist.Areas.Identity.Pages.Account
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                if (user.Status is true)
+                if (user != null && user.Status is true)
                 {
                     ModelState.AddModelError(string.Empty, "User is blocked");
                     return Page();
