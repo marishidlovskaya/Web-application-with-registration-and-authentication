@@ -46,6 +46,7 @@ namespace WebApplicationAutentRegist.Pages
                 {
                     u.Status = true;
                     await _userManager.UpdateAsync(u);
+                    await _userManager.UpdateSecurityStampAsync(u);
                 }
             }
             if (userIds.Contains(currentuser.Id))
@@ -66,7 +67,6 @@ namespace WebApplicationAutentRegist.Pages
                     await _userManager.UpdateAsync(u);
                 }
             }
-
             return Page();
         }
         public async Task<IActionResult> OnPostDeleteUsersAsync(string[] userIds)
@@ -78,6 +78,7 @@ namespace WebApplicationAutentRegist.Pages
                 if (u != null)
                 {
                     await _userManager.DeleteAsync(u);
+                    await _userManager.UpdateSecurityStampAsync(u);
                 }
             }
             if (userIds.Contains(currentuser.Id))

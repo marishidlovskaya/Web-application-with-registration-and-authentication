@@ -119,16 +119,17 @@ namespace WebApplicationAutentRegist.Areas.Identity.Pages.Account
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+                if (user.Status is true)
+                {
+                    ModelState.AddModelError(string.Empty, "User is blocked");
+                    return Page();
+                }
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
                 
                 if (result.Succeeded)
                 {
                     user.LastLoginTime = DateTime.UtcNow;
-                    if (user.Status is true)
-                    {
-                        ModelState.AddModelError(string.Empty, "User is blocked");
-                        return Page();
-                    }
+                   
                     _logger.LogInformation("User logged in.");
                     await _userManager.UpdateAsync(user);
                     return LocalRedirect(returnUrl);

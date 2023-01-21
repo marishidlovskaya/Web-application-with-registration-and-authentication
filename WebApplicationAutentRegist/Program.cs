@@ -28,6 +28,11 @@ builder.Services.AddAuthorization(options =>
         .Build();
 });
 
+builder.Services.Configure<SecurityStampValidatorOptions>(options =>
+{
+    options.ValidationInterval = TimeSpan.Zero;
+});
+
 builder.Services.Configure<IdentityOptions>(options =>
 {
     options.Password.RequiredLength = 1;
