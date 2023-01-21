@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MySqlX.XDevAPI.Common;
 using WebApplicationAutentRegist.Data;
+using static WebApplicationAutentRegist.Pages.AdminPageModel;
 
 namespace WebApplicationAutentRegist.Pages
 {
@@ -72,12 +73,19 @@ namespace WebApplicationAutentRegist.Pages
         public async Task<IActionResult> OnPostDeleteUsersAsync(string[] userIds)
         {
             var currentuser = await GetCurrentUserAsync();
+            var us = _userManager.Users.ToList();
             foreach (var user in userIds)
             {
-                var u = _userManager.Users.Where(s => s.Id == user).FirstOrDefault();
+                var u = us.Where(s => s.Id == user).FirstOrDefault();
                 if (u != null)
                 {
                     await _userManager.DeleteAsync(u);
+                }
+            }
+            foreach (var user in userIds)
+            {
+                var u = us.Where(s => s.Id == user).FirstOrDefault();
+                {
                     await _userManager.UpdateSecurityStampAsync(u);
                 }
             }
